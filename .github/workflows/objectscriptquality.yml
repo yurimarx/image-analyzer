@@ -1,0 +1,13 @@
+name: objectscriptquality
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  linux:
+    name: ObjectScript Quality
+    runs-on: ubuntu-latest
+    steps:
+    - name: Execute ObjectScript Quality Analysis
+      run: wget https://raw.githubusercontent.com/litesolutions/objectscriptquality-jenkins-integration/master/iris-community-hook.sh && sh ./iris-community-hook.sh
