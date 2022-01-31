@@ -38,7 +38,7 @@ ClassMethod AnalyzeImage() As %Status
     try {
         Set source = %request.GetMimeData("file")
         Set destination=##class(%Stream.FileBinary).%New()
-        Set destination.Filename="/opt/irisbuild/input/" + source.FileName
+        Set destination.Filename="/opt/irisbuild/input/"_source.FileName
         set tSC=destination.CopyFrom(source) //reader open the file
         set result=destination.%Save()
         
@@ -66,11 +66,11 @@ ClassMethod PostFile() As %Status
         Set info = {}
         Set source = %request.GetMimeData("file")
         Set destination=##class(%Stream.FileBinary).%New()
-        Set destination.Filename="/opt/irisbuild/output/" + source.FileName
+        Set destination.Filename="/opt/irisbuild/input/"_source.FileName
         set tSC=destination.CopyFrom(source) //reader open the file
         set result=destination.%Save()
         set info.return = result
-        set info.message = "File saved into /opt/irisbuild/output/"_source.FileName
+        set info.message = "File saved into /opt/irisbuild/input/"_source.FileName
         
         Set %response.ContentType = ..#CONTENTTYPEJSON
         Set %response.Headers("Access-Control-Allow-Origin")="*"
