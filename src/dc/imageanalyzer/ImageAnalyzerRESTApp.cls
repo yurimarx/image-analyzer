@@ -36,7 +36,10 @@ ClassMethod AnalyzeImage() As %Status
     Set tSC = $$$OK
     
     try {
+        // get the file from the multipart request
         Set source = %request.GetMimeData("file")
+        
+        // save the file to the input folder, to be processed with imageai
         Set destination=##class(%Stream.FileBinary).%New()
         Set destination.Filename="/opt/irisbuild/input/"_source.FileName
         set tSC=destination.CopyFrom(source) //reader open the file
@@ -45,6 +48,7 @@ ClassMethod AnalyzeImage() As %Status
         Set %response.ContentType = ..#CONTENTTYPEJSON
         Set %response.Headers("Access-Control-Allow-Origin")="*"
 
+        //call embedded python classmethod to detect objets and write the results as json content
         Write ##class(dc.imageanalyzer.Detector).GetImageAI(source.FileName)
 
         Set tSC=$$$OK
