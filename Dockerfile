@@ -34,9 +34,13 @@ COPY  src src
 COPY module.xml module.xml
 COPY iris.script iris.script
 
+ADD https://github.com/OlafenwaMoses/ImageAI/releases/download/essentials-v5/resnet50_coco_best_v2.1.0.h5 models
+
 USER root
 RUN chmod -R 777 input
 RUN chmod -R 777 output
+RUN chmod -R 777 models
+
 
 USER ${ISC_PACKAGE_MGRUSER}
 

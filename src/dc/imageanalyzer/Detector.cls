@@ -10,11 +10,11 @@ ClassMethod GetImageFeatures(Image) [ Language = python ]
     
     detector = ObjectDetection()
 
-    model_path = "/opt/irisbuild/models/yolo-tiny.h5"
+    model_path = "/opt/irisbuild/models/resnet50_coco_best_v2.1.0.h5"
     input_path = "/opt/irisbuild/input/" + Image
     output_path = "/opt/irisbuild/output/" + Image
 
-    detector.setModelTypeAsTinyYOLOv3()
+    detector.setModelTypeAsRetinaNet()
     detector.setModelPath(model_path)
     detector.loadModel()
     detection = detector.detectObjectsFromImage(input_image=input_path, output_image_path=output_path)
