@@ -35,6 +35,7 @@ COPY module.xml module.xml
 COPY iris.script iris.script
 
 USER root
+RUN chmod 777 input
 RUN chmod 777 output
 
 USER ${ISC_PACKAGE_MGRUSER}

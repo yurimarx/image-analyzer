@@ -9,6 +9,22 @@
       <SourcesRoot>src</SourcesRoot>
       <Resource Name="dc.imageanalyzer.PKG"/>
       <FileCopy Name="python/" Target="${mgrdir}python/"/>
+      <Dependencies>
+        <ModuleReference>
+          <Name>swagger-ui</Name>
+          <Version>1.*.*</Version>
+        </ModuleReference>
+      </Dependencies>
+      <CSPApplication 
+        Url="/image-analyzer"
+        DispatchClass="dc.imageanalyzer.ImageAnalyzerRESTApp"
+        MatchRoles=":{$dbrole}"
+        PasswordAuthEnabled="0"
+        UnauthenticatedEnabled="1"
+        Recurse="1"
+        UseCookies="2"
+        CookiePath="/image-analyzer"
+       />
     </Module>
   </Document>
 </Export>

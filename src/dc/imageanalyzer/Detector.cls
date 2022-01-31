@@ -11,8 +11,8 @@ ClassMethod GetImageFeatures(Image) [ Language = python ]
     detector = ObjectDetection()
 
     model_path = "/opt/irisbuild/models/yolo-tiny.h5"
-    input_path = "/opt/irisbuild/input/" + Image + ".jpg"
-    output_path = "/opt/irisbuild/output/" + Image + ".jpg"
+    input_path = "/opt/irisbuild/input/" + Image
+    output_path = "/opt/irisbuild/output/" + Image
 
     detector.setModelTypeAsTinyYOLOv3()
     detector.setModelPath(model_path)
