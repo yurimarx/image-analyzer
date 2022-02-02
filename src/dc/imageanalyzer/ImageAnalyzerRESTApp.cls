@@ -26,6 +26,9 @@ XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 <Route Url="/postFile" Method="POST" Call="PostFile" />
 
 
+<!-- get image -->
+<Route Url="/getFile" Method="GET" Call="GetFile" />
+
 </Routes>
 }
 
@@ -45,12 +48,25 @@ ClassMethod AnalyzeImage() As %Status
         set tSC=destination.CopyFrom(source) //reader open the file
         set result=destination.%Save()
         
-        Set %response.ContentType = ..#CONTENTTYPEJSON
+        //call embedded python classmethod to detect objets and write the results as json content
+        Do ##class(dc.imageanalyzer.Detector).GetImageAI(source.FileName)
+
+        If ($FIND(source.FileName, "jpg") > 0) || ($FIND(source.FileName, "jpeg") > 0) {
+          Set %response.ContentType = "image/jpeg"
+        } ElseIf ($FIND(source.FileName, "png") > 0) {
+          Set %response.ContentType = "image/png"
+        } Else {
+          Set %response.ContentType = "application/octet-stream"
+        }
+
+        Do %response.SetHeader("Content-Disposition","attachment;filename="""_source.FileName_"""")
+        Set %response.NoCharSetConvert=1
         Set %response.Headers("Access-Control-Allow-Origin")="*"
 
-        //call embedded python classmethod to detect objets and write the results as json content
-        Write ##class(dc.imageanalyzer.Detector).GetImageAI(source.FileName)
-
+        Set stream=##class(%Stream.FileBinary).%New()
+        Set sc=stream.LinkToFile("/opt/irisbuild/output/"_source.FileName)
+        Do stream.OutputToDevice()
+         
         Set tSC=$$$OK
     
     //returns error message to the user
@@ -80,6 +96,33 @@ ClassMethod PostFile() As %Status
         Set %response.Headers("Access-Control-Allow-Origin")="*"
 
         Write info.%ToJSON()
+
+        Set tSC=$$$OK
+    
+    //returns error message to the user
+    } catch e {
+        Set tSC=e.AsStatus()
+        Set pOutput = tSC
+    }
+
+    Quit tSC
+}
+
+ClassMethod GetFile() As %Status
+{
+   
+    //try to do the actions
+    try {
+        
+        Set %response.ContentType = "image/jpeg"
+        Do %response.SetHeader("Content-Disposition","attachment;filename=""test.jpg""")
+        Set %response.NoCharSetConvert=1
+        Set %response.Headers("Access-Control-Allow-Origin")="*"
+
+        Set stream=##class(%Stream.FileBinary).%New()
+        Set sc=stream.LinkToFile("/opt/irisbuild/output/test.jpg")
+        Do stream.OutputToDevice()
+        Do stream.Close()
 
         Set tSC=$$$OK
     

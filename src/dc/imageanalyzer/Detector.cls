@@ -41,10 +41,10 @@ ClassMethod GetJSON(pythonObj) [ Language = python ]
 }
 
 /// Description
-ClassMethod GetImageAI(Image) As %Status
+ClassMethod GetImageAI(Image, Output Results As %String) As %Status
 {
     Set sc = $$$OK
-    Write ..GetImageFeatures(Image)
+    Set Results = ..GetImageFeatures(Image)
     Return sc
 }
 
