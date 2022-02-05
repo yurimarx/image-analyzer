@@ -1,0 +1,1 @@
+The output folder receives the images processed
