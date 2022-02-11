@@ -11,7 +11,8 @@ RUN apt-get -y update \
     && apt-get install -y build-essential unzip pkg-config \
         zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev \
         libssl-dev libreadline-dev libffi-dev wget \
-    && apt-get install -y ffmpeg libsm6 libxext6   
+    && apt-get install -y ffmpeg libsm6 libxext6 \
+    && apt-get install -y python3-pip   
 
 # use pip3 (the python zpm) to install imageai and the imageai dependencies
 RUN pip3 install --upgrade pip setuptools wheel
