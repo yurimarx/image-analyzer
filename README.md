@@ -26,7 +26,7 @@ $ docker-compose up -d
 ![Request Image Analysis input](https://github.com/yurimarx/image-analyzer/raw/main/postman_input.png "Request Image Analysis input")
 
 - Method: POST
-- URL: http://localhost:52773/image-analyzer/analyzeImage
+- URL: http://localhost:52773/image-analyzer/analyzeImage (if you want to run online: http://ymservices.tech:52773/image-analyzer/analyzeImage)
 - Body: form-data
 - Key: file (the name of file field must be file) and type File 
 - Value: select an image with persons and/or objects from your computer
@@ -38,6 +38,9 @@ $ docker-compose up -d
 
 # Credits
 This application used ImageAI framework
+
+# Run online
+http://ymservices.tech:52773/image-analyzer/analyzeImage
 
 @misc {ImageAI,
     author = "Moses and John Olafenwa",
